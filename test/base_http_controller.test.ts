@@ -1,6 +1,5 @@
 import { expect } from "chai";
-import * as express from "express";
-import { Container, injectable, inject } from "inversify";
+import { Container, inject } from "inversify";
 import * as supertest from "supertest";
 import {
     InversifyExpressServer,
@@ -16,9 +15,8 @@ import { StringContent } from "../src/content/stringContent";
 
 describe("BaseHttpController", () => {
 
-    beforeEach((done) => {
+    beforeEach(() => {
         cleanUpMetadata();
-        done();
     });
 
     it("Should contain httpContext instance", (done) => {

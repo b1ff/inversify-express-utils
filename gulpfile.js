@@ -4,6 +4,7 @@
 //* DEPENDENCIES
 //******************************************************************************
 var gulp = require("gulp"),
+    del = require("del"),
     tslint = require("gulp-tslint"),
     tsc = require("gulp-typescript"),
     runSequence = require("run-sequence"),
@@ -17,9 +18,13 @@ var gulp = require("gulp"),
 gulp.task("clean", function () {
     return del([
         "src/**/*.js",
+        "src/**/*.js.map",
         "test/**/*.test.js",
+        "test/**/*.test.js.map",
         "src/*.js",
+        "src/*.js.map",
         "test/*.test.js",
+        "test/*.test.js.map",
         "lib",
         "es",
         "amd"
