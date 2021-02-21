@@ -1,13 +1,12 @@
 import { expect } from "chai";
 import * as sinon from "sinon";
 import * as express from "express";
-import { InversifyExpressServer } from "../src/server";
+import { InversifyExpressServer } from "../src/InversifyExpressServer";
 import { controller } from "../src/decorators";
-import { Container, injectable } from "inversify";
-import { TYPE } from "../src/constants";
+import { Container } from "inversify";
 import { cleanUpMetadata } from "../src/utils";
 import { HttpResponseMessage } from "../src";
-import { Mock, Times, MockBehavior } from "moq.ts";
+import { Mock, MockBehavior, Times } from "moq.ts";
 
 describe("Unit Test: InversifyExpressServer", () => {
 

@@ -1,7 +1,7 @@
 import * as express from "express";
 import { interfaces as inversifyInterfaces } from "inversify";
 import { PARAMETER_TYPE } from "./constants";
-import { HttpResponseMessage } from "./httpResponseMessage";
+import { HttpResponseMessage } from "./HttpResponseMessage";
 
 namespace interfaces {
 

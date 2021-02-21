@@ -3,7 +3,7 @@ import * as express from "express";
 import { interfaces } from "../../src/interfaces";
 import * as bodyParser from "body-parser";
 import { METADATA_KEY, PARAMETER_TYPE } from "../../src/constants";
-import { InversifyExpressServer } from "../../src/server";
+import { InversifyExpressServer } from "../../src/InversifyExpressServer";
 import { Container, injectable } from "inversify";
 import { TYPE } from "../../src/constants";
 import * as supertest from "supertest";

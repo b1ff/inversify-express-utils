@@ -1,6 +1,6 @@
-import { HttpResponseMessage } from "../httpResponseMessage";
+import { HttpResponseMessage } from "../HttpResponseMessage";
 import { interfaces } from "../interfaces";
-import { BaseHttpController } from "../base_http_controller";
+import { BaseHttpController } from "../BaseHttpController";
 
 export default class ResponseMessageResult implements interfaces.IHttpActionResult {
     constructor(private message: HttpResponseMessage, private apiController: BaseHttpController) {}

@@ -3,7 +3,7 @@ import { expect } from "chai";
 import { Mock } from "moq.ts";
 import { BaseHttpController } from "../src/index";
 import * as httpStatusCodes from "http-status-codes";
-import { HttpResponseMessage } from "../src/httpResponseMessage";
+import { HttpResponseMessage } from "../src/HttpResponseMessage";
 
 describe("ActionResults", function() {
     describe("OkResult", function() {

@@ -1,8 +1,8 @@
-import { HttpResponseMessage } from "../httpResponseMessage";
+import { HttpResponseMessage } from "../HttpResponseMessage";
 import { MOVED_TEMPORARILY } from "http-status-codes";
 import { interfaces } from "../interfaces";
 import { URL } from "url";
-import { BaseHttpController } from "../base_http_controller";
+import { BaseHttpController } from "../BaseHttpController";
 
 export default class RedirectResult implements interfaces.IHttpActionResult {
     constructor(private location: string | URL, private apiController: BaseHttpController) {}

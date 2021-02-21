@@ -1,7 +1,6 @@
-import * as express from "express";
-import { inject, injectable, decorate } from "inversify";
+import { decorate, inject, injectable } from "inversify";
 import { interfaces } from "./interfaces";
-import { TYPE, METADATA_KEY, PARAMETER_TYPE } from "./constants";
+import { METADATA_KEY, PARAMETER_TYPE, TYPE } from "./constants";
 
 export const injectHttpContext = inject(TYPE.HttpContext);
 
@@ -21,7 +20,7 @@ export function controller(path: string, ...middleware: interfaces.Middleware[])
         // the controllers in the application, the metadata cannot be
         // attached to a controller. It needs to be attached to a global
         // We attach metadata to the Reflect object itself to avoid
-        // declaring additonal globals. Also, the Reflect is avaiable
+        // declaring additional globals. Also, the Reflect is available
         // in both node and web browsers.
         const previousMetadata: interfaces.ControllerMetadata[] = Reflect.getMetadata(
             METADATA_KEY.controller,

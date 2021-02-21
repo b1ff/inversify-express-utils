@@ -1,8 +1,8 @@
-import { HttpResponseMessage } from "../httpResponseMessage";
+import { HttpResponseMessage } from "../HttpResponseMessage";
 import { CREATED } from "http-status-codes";
 import { interfaces } from "../interfaces";
 import { URL } from "url";
-import { BaseHttpController } from "../base_http_controller";
+import { BaseHttpController } from "../BaseHttpController";
 import { StringContent } from "../content/stringContent";
 
 export default class CreatedNegotiatedContentResult<T> implements interfaces.IHttpActionResult {

@@ -1,7 +1,7 @@
 import { interfaces } from "../interfaces";
-import { HttpResponseMessage } from "../httpResponseMessage";
+import { HttpResponseMessage } from "../HttpResponseMessage";
 import { JsonContent } from "../content/jsonContent";
-import { BaseHttpController } from "../base_http_controller";
+import { BaseHttpController } from "../BaseHttpController";
 
 export default class JsonResult implements interfaces.IHttpActionResult {
 

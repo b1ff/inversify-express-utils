@@ -17,19 +17,19 @@ import {
     PARAMETER_TYPE,
     DUPLICATED_CONTROLLER_NAME
 } from "./constants";
-import { HttpResponseMessage } from "./httpResponseMessage";
+import { HttpResponseMessage } from "./HttpResponseMessage";
 import { OutgoingHttpHeaders } from "http";
 
 export class InversifyExpressServer {
 
-    private _router: express.Router;
-    private _container: inversify.interfaces.Container;
-    private _app: express.Application;
+    private readonly _router: express.Router;
+    private readonly _container: inversify.interfaces.Container;
+    private readonly _app: express.Application;
     private _configFn: interfaces.ConfigFunction;
     private _errorConfigFn: interfaces.ConfigFunction;
     private _routingConfig: interfaces.RoutingConfig;
-    private _AuthProvider: { new(): interfaces.AuthProvider };
-    private _forceControllers: boolean;
+    private readonly _AuthProvider: { new(): interfaces.AuthProvider };
+    private readonly _forceControllers: boolean;
 
     /**
      * Wrapper for the express server.
@@ -93,9 +93,6 @@ export class InversifyExpressServer {
      * Applies all routes and configuration to the server, returning the express application.
      */
     public build(): express.Application {
-
-        const _self = this;
-
         // The very first middleware to be invoked
         // it creates a new httpContext and attaches it to the
         // current request as metadata using Reflect
@@ -105,7 +102,7 @@ export class InversifyExpressServer {
             next: express.NextFunction
         ) => {
             (async () => {
-                const httpContext = await _self._createHttpContext(req, res, next);
+                const httpContext = await this.createHttpContext(req, res, next);
                 Reflect.defineMetadata(
                     METADATA_KEY.httpContext,
                     httpContext,
@@ -163,7 +160,7 @@ export class InversifyExpressServer {
 
             if (controllerMetadata && methodMetadata) {
 
-                let controllerMiddleware = this.resolveMidleware(...controllerMetadata.middleware);
+                let controllerMiddleware = this.resolveMiddleware(...controllerMetadata.middleware);
 
                 methodMetadata.forEach((metadata: interfaces.ControllerMethodMetadata) => {
                     let paramList: interfaces.ParameterMetadata[] = [];
@@ -171,7 +168,7 @@ export class InversifyExpressServer {
                         paramList = parameterMetadata[metadata.key] || [];
                     }
                     let handler: express.RequestHandler = this.handlerFactory(controllerMetadata.target.name, metadata.key, paramList);
-                    let routeMiddleware = this.resolveMidleware(...metadata.middleware);
+                    let routeMiddleware = this.resolveMiddleware(...metadata.middleware);
                     this._router[metadata.method](
                         `${controllerMetadata.path}${metadata.path}`,
                         ...controllerMiddleware,
@@ -185,7 +182,7 @@ export class InversifyExpressServer {
         this._app.use(this._routingConfig.rootPath, this._router);
     }
 
-    private resolveMidleware(...middleware: interfaces.Middleware[]): express.RequestHandler[] {
+    private resolveMiddleware(...middleware: interfaces.Middleware[]): express.RequestHandler[] {
         return middleware.map(middlewareItem => {
             if (!this._container.isBound(middlewareItem)) {
                 return middlewareItem as express.RequestHandler;
@@ -200,7 +197,7 @@ export class InversifyExpressServer {
                     res: express.Response,
                     next: express.NextFunction
                 ) {
-                    const httpContext = _self._getHttpContext(req);
+                    const httpContext = _self.getHttpContext(req);
                     let mReq = httpContext.container.get<BaseMiddleware>(middlewareItem);
                     (mReq as any).httpContext = httpContext;
                     mReq.handler(req, res, next);
@@ -246,7 +243,7 @@ export class InversifyExpressServer {
             try {
                 let args = this.extractParameters(req, res, next, parameterMetadata);
 
-                const httpContext = this._getHttpContext(req);
+                const httpContext = this.getHttpContext(req);
                 httpContext.container.bind<interfaces.HttpContext>(TYPE.HttpContext)
                     .toConstantValue(httpContext);
 
@@ -272,19 +269,19 @@ export class InversifyExpressServer {
         };
     }
 
-    private _getHttpContext(req: express.Request): interfaces.HttpContext {
+    private getHttpContext(req: express.Request): interfaces.HttpContext {
         return Reflect.getMetadata(
             METADATA_KEY.httpContext,
             req
         );
     }
 
-    private async _createHttpContext(
+    private async createHttpContext(
         req: express.Request,
         res: express.Response,
         next: express.NextFunction
     ) {
-        const principal = await this._getCurrentUser(req, res, next);
+        const principal = await this.getCurrentUser(req, res, next);
         return {
             request: req,
             response: res,
@@ -295,7 +292,7 @@ export class InversifyExpressServer {
         };
     }
 
-    private async _getCurrentUser(
+    private async getCurrentUser(
         req: express.Request,
         res: express.Response,
         next: express.NextFunction
@@ -343,7 +340,7 @@ export class InversifyExpressServer {
                     args[index] = this.getParam(req, "cookies", injectRoot, parameterName);
                     break;
                 case PARAMETER_TYPE.PRINCIPAL:
-                    args[index] = this._getPrincipal(req);
+                    args[index] = this.getPrincipal(req);
                     break;
                 default:
                     args[index] = res;
@@ -366,7 +363,7 @@ export class InversifyExpressServer {
         }
     }
 
-    private _getPrincipal(req: express.Request): interfaces.Principal | null {
-        return this._getHttpContext(req).user;
+    private getPrincipal(req: express.Request): interfaces.Principal | null {
+        return this.getHttpContext(req).user;
     }
 }

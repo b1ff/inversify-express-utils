@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
 import { injectHttpContext } from "./decorators";
 import { interfaces } from "./interfaces";
-import { HttpResponseMessage } from "./httpResponseMessage";
+import { HttpResponseMessage } from "./HttpResponseMessage";
 import { URL } from "url";
 import {
     CreatedNegotiatedContentResult,

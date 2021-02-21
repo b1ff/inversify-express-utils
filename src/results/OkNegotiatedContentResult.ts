@@ -1,7 +1,7 @@
-import { HttpResponseMessage } from "../httpResponseMessage";
+import { HttpResponseMessage } from "../HttpResponseMessage";
 import { OK } from "http-status-codes";
 import { interfaces } from "../interfaces";
-import { BaseHttpController } from "../base_http_controller";
+import { BaseHttpController } from "../BaseHttpController";
 import { StringContent } from "../content/stringContent";
 
 export default class OkNegotiatedContentResult<T> implements interfaces.IHttpActionResult {

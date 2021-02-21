@@ -1,16 +1,9 @@
 import { expect } from "chai";
 import { Container, inject } from "inversify";
 import * as supertest from "supertest";
-import {
-    InversifyExpressServer,
-    TYPE,
-    controller,
-    httpGet,
-    BaseHttpController,
-    interfaces
-} from "../src/index";
+import { BaseHttpController, controller, httpGet, interfaces, InversifyExpressServer } from "../src/index";
 import { cleanUpMetadata } from "../src/utils";
-import { HttpResponseMessage } from "../src/httpResponseMessage";
+import { HttpResponseMessage } from "../src/HttpResponseMessage";
 import { StringContent } from "../src/content/stringContent";
 
 describe("BaseHttpController", () => {

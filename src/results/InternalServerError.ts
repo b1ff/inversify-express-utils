@@ -1,7 +1,7 @@
-import { HttpResponseMessage } from "../httpResponseMessage";
+import { HttpResponseMessage } from "../HttpResponseMessage";
 import { INTERNAL_SERVER_ERROR } from "http-status-codes";
 import { interfaces } from "../interfaces";
-import { BaseHttpController } from "../base_http_controller";
+import { BaseHttpController } from "../BaseHttpController";
 
 export default class InternalServerErrorResult implements interfaces.IHttpActionResult {
     constructor(private apiController: BaseHttpController) {}
